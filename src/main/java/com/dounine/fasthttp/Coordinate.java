@@ -50,7 +50,7 @@ public class Coordinate implements ICoordinate{
         }
         try {
             Proxy proxy = new Proxy(Proxy.Type.HTTP,new InetSocketAddress("localhost",8080));
-            connection = url.openConnection(proxy);
+            connection = url.openConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }

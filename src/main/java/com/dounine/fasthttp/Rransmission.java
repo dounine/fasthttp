@@ -56,6 +56,8 @@ public class Rransmission implements IRransmission {
                 deleteHeartbeat();break;
             case FILE:
                 fileHeartbeat();break;
+            case SHARE_FILE:
+                fileShareHeartbeat();break;
             case OPTIONS:
                 optionsHeartbeat();break;
         }
@@ -85,7 +87,7 @@ public class Rransmission implements IRransmission {
                 response.setCode(404);
                 response.setText("request url can't find it.");
                 enfe.printStackTrace();
-            } catch (IOException e) {
+            }catch (IOException e) {
                 response.setCode(-1);
                 response.setText(e.getMessage());
                 e.printStackTrace();
@@ -121,7 +123,7 @@ public class Rransmission implements IRransmission {
         coordinate.data(sb.toString());
         URLConnection connection = coordinate.point();
         try {
-            connection.setRequestProperty("content-type", "application/x-www-form-urlencoded;charset=utf-8");
+            RequestProperty.init(connection);
             connection.connect();
         }catch (IOException e) {
             e.printStackTrace();
@@ -133,7 +135,7 @@ public class Rransmission implements IRransmission {
         dataJoin(sb);
         URLConnection connection = coordinate.point();
         try {
-            connection.setRequestProperty("content-type", "application/x-www-form-urlencoded;charset=utf-8");
+            RequestProperty.init(connection);
             connection.setDoOutput(true);
             OutputStream os = connection.getOutputStream();
             os.write(sb.toString().getBytes());
@@ -149,7 +151,7 @@ public class Rransmission implements IRransmission {
         HttpURLConnection connection = coordinate.httpPoint();
         try {
             connection.setRequestMethod(PUT.toString());
-            connection.setRequestProperty("content-type", "application/x-www-form-urlencoded;charset=utf-8");
+            RequestProperty.init(connection);
             connection.setDoOutput(true);
             OutputStream os = connection.getOutputStream();
             os.write(sb.toString().getBytes());
@@ -165,7 +167,7 @@ public class Rransmission implements IRransmission {
         HttpURLConnection connection = coordinate.httpPoint();
         try {
             connection.setRequestMethod(HeartType.PATCH.toString());
-            connection.setRequestProperty("content-type", "application/x-www-form-urlencoded;charset=utf-8");
+            RequestProperty.init(connection);
             connection.setDoOutput(true);
             OutputStream os = connection.getOutputStream();
             os.write(sb.toString().getBytes());
@@ -201,7 +203,9 @@ public class Rransmission implements IRransmission {
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(output));
             writer.append(split);
             writer.append(boundary).append(CRLF);
-            writer.append("Content-Disposition:form-data;name=\"data\";filename=\"" + mediaFile.getFile().getName() + "\"").append(CRLF);
+            writer.append("Content-Disposition:form-data;name=\"data\";filename=\"");
+            writer.append(mediaFile.getFile().getName());
+            writer.append("\"").append(CRLF);
             writer.append("Content-Type:application/octet-stream").append(CRLF);
             writer.append(CRLF).append(CRLF);
             writer.flush();
@@ -218,6 +222,11 @@ public class Rransmission implements IRransmission {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void fileShareHeartbeat(){
+
+
     }
 
     public void optionsHeartbeat(){

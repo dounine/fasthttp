@@ -1,7 +1,9 @@
 package com.dounine.fasthttp.utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Created by huanghuanlai on 16/7/6.
@@ -10,25 +12,14 @@ public final class InputStreamUtils {
 
     private InputStreamUtils(){}
 
-    public static String istreamToString(InputStream is,int len){
-        byte[] bytes = new byte[len];
-        try {
-            is.read(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new String(bytes,0,len);
-    }
-
     public static String istreamToString(InputStream is){
-        StringBuilder strs = new StringBuilder();
-        byte[] bytes = new byte[1024];
-        int len = 0;
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        StringBuffer strs = new StringBuffer();
+        char[] chars = new char[100];
         try {
-            len = is.read(bytes);
-            while(-1!=len){
-                strs.append(new String(bytes,0,len));
-                len = is.read(bytes);
+            int readed;
+            while((readed=br.read(chars))!=-1){
+                strs.append(new String(chars,0,readed));
             }
         } catch (IOException e) {
             e.printStackTrace();

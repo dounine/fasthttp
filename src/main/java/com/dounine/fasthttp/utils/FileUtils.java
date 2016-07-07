@@ -22,10 +22,12 @@ public class FileUtils {
     public static void writeFileByOutput(File file,OutputStream output){
         try {
             InputStream input = FileUtils.openInputStream(file);
-            byte[] data = new byte[1024];
+            BufferedInputStream bis = new BufferedInputStream(input);
+            BufferedOutputStream bos = new BufferedOutputStream(output);
+            byte[] b = new byte[1024];
             int readed;
-            while((readed=input.read(data))!=EOF){
-                output.write(data,0,readed);
+            while((readed=bis.read(b))!=EOF){
+                bos.write(b,0,readed);
             }
             output.flush();
         } catch (IOException e) {

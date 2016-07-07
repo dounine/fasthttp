@@ -3,6 +3,7 @@ package com.dounine.fasthttp;
 import com.dounine.fasthttp.medias.IMedia;
 import com.dounine.fasthttp.medias.Media;
 import com.dounine.fasthttp.medias.MediaFile;
+import com.dounine.fasthttp.medias.MediaSharFile;
 import com.dounine.fasthttp.types.HeartType;
 import org.junit.Test;
 
@@ -94,10 +95,23 @@ public class TestFlashLight {
 
     @Test
     public void testFileMedias(){
+        long begin = System.currentTimeMillis();
         IFlashLight flashLight = new FlashLight(new Coordinate("http://localhost:8081/file/u"));
         flashLight.on();//打开
         flashLight.emit(HeartType.FILE,new MediaFile(new File("/Users/huanghuanlai/Desktop/b.java")));
         System.out.println(flashLight.response().toString());
         flashLight.off();//关闭
+        System.out.println(System.currentTimeMillis()-begin);
+    }
+
+    @Test
+    public void testSharFileMedias(){
+        long begin = System.currentTimeMillis();
+        IFlashLight flashLight = new FlashLight(new Coordinate("http://localhost:8081/file/u"));
+        flashLight.on();//打开
+        flashLight.emit(HeartType.FILE,new MediaSharFile(new File("/Users/huanghuanlai/Desktop/CodeRunner 2.1.1.zip")));
+        System.out.println(flashLight.response().toString());
+        flashLight.off();//关闭
+        System.out.println(System.currentTimeMillis()-begin);
     }
 }
