@@ -11,6 +11,10 @@ public interface ICoordinate {
 
     void init();
 
+    String getUri();
+
+    void setUri(String uri);
+
     void data(String data);
 
     URLConnection point();

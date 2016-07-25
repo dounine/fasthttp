@@ -7,12 +7,30 @@ import java.io.File;
  */
 public class MediaSharFile extends MediaFile implements IMediaSharFile {
 
+    protected long sharSize;
+    protected String token;
+
     public MediaSharFile(File file){
         this.file = file;
     }
 
     @Override
-    public long sharSize() {
-        return 0;
+    public void setSharSize(long sharSize) {
+        this.sharSize = sharSize;
+    }
+
+    @Override
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    @Override
+    public long getSharSize() {
+        return sharSize;
+    }
+
+    @Override
+    public String getToken() {
+        return token;
     }
 }

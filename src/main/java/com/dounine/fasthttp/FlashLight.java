@@ -18,6 +18,12 @@ public class FlashLight implements IFlashLight{
 
     protected IRransmission rransmission;
 
+    protected HeartType heartType = HeartType.GET;
+
+    protected IMedia media;
+
+    protected List<IMedia> medias;
+
     public FlashLight(ICoordinate coordinate){
         setCoordinate(coordinate);
     }
@@ -51,34 +57,34 @@ public class FlashLight implements IFlashLight{
 
     @Override
     public void emit() {
+        if(null!=media){
+            rransmission.push(heartType,media);
+        }else if(null!=medias){
+            rransmission.push(heartType,medias);
+        }else{
+            rransmission.push(heartType);
+        }
+    }
 
+    @Override
+    public void emit(HeartType heartType) {
+        this.heartType = heartType;
+        emit();
     }
 
     /**
      * emit the Media
      */
     @Override
-    public void emit(IMedia media){
-        URLConnection connection = coordinate.point();
+    public void ready(IMedia media){
+        this.media = media;
         rransmission = new Rransmission(this);
-        rransmission.push(HeartType.GET,media);
-    }
-
-    public void emit(HeartType heartType,IMedia media){
-        URLConnection connection = coordinate.point();
-        rransmission = new Rransmission(this);
-        rransmission.push(heartType,media);
     }
 
     @Override
-    public void emits(List<IMedia> medias) {
+    public void ready(List<IMedia> medias) {
+        this.medias = medias;
         rransmission = new Rransmission(this);
-        rransmission.push(HeartType.GET,medias);
-    }
-
-    public void emits(HeartType heartType,List<IMedia> medias) {
-        rransmission = new Rransmission(this);
-        rransmission.push(heartType,medias);
     }
 
     @Override

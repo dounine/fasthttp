@@ -17,13 +17,11 @@ public interface IFlashLight {
 
     void emit();
 
-    void emit(IMedia media);
+    void emit(HeartType heartType);
 
-    void emit(HeartType heartType, IMedia media);
+    void ready(IMedia media);
 
-    void emits(List<IMedia> medias);
-
-    void emits(HeartType heartType,List<IMedia> medias);
+    void ready(List<IMedia> medias);
 
     void irising();
 

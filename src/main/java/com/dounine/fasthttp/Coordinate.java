@@ -35,6 +35,22 @@ public class Coordinate implements ICoordinate{
     }
 
     @Override
+    public String getUri() {
+        return uri;
+    }
+
+    @Override
+    public void setUri(String u) {
+        try {
+            connection = null;
+            this.uri = u;
+            url = new URL(this.uri);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void data(String data) {
         try {
             url = new URL(uri+data);

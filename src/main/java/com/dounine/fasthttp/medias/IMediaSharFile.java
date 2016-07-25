@@ -5,6 +5,12 @@ package com.dounine.fasthttp.medias;
  */
 public interface IMediaSharFile extends IMediaFile {
 
-    long sharSize();
+    void setSharSize(long sharSize);
+
+    void setToken(String token);
+
+    long getSharSize();
+
+    String getToken();
 
 }

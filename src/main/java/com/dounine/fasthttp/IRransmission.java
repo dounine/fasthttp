@@ -15,6 +15,8 @@ public interface IRransmission {
 
     void heartbeat(HeartType heartType);
 
+    void push(HeartType heartType);
+
     void push(HeartType heartType,IMedia media);
 
     void push(HeartType heartType,List<IMedia> medias);

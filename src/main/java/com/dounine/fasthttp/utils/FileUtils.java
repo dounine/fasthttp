@@ -19,6 +19,19 @@ public class FileUtils {
         }
     }
 
+    public static byte[] readLengthBytes(RandomAccessFile randomAccessFile, long offset, int length) {
+        byte[] bytes = new byte[length];
+        try {
+            randomAccessFile.seek(offset);
+            randomAccessFile.read(bytes,0,length);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bytes;
+    }
+
     public static void writeFileByOutput(File file,OutputStream output){
         try {
             InputStream input = FileUtils.openInputStream(file);
@@ -30,6 +43,40 @@ public class FileUtils {
                 bos.write(b,0,readed);
             }
             output.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void copyToFile(InputStream is,File file){
+        FileOutputStream fos=null;
+        try {
+            fos = new FileOutputStream(file);
+            int len = 0;
+            byte[] b = new byte[2048];
+            while((len=is.read(b))!=-1){
+                fos.write(b,0,len);
+            }
+            fos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(null!=fos){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void writeStringToFile(String str,File file){
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(str.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
