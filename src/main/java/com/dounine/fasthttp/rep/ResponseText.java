@@ -4,8 +4,9 @@ package com.dounine.fasthttp.rep;
  * Created by huanghuanlai on 16/4/1.
  */
 public class ResponseText {
+    public static final int SUCCESS_CODE = 0;
 
-    private int errno = 0;
+    private int errno = SUCCESS_CODE;
     private Object data;
     private String msg;
 
